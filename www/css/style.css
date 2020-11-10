@@ -1,0 +1,79 @@
+/**/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: 'Major Mono Display', monospace;
+  padding: 2rem 1rem;
+  background-color: #0A192F;
+  height: 100vh
+}
+
+h1{
+  color: #CCD6F6;
+  font-weight: 400;
+  text-align: center
+}
+
+.row{
+  display: flex;
+}
+
+.addContact{
+  justify-content: flex-end;
+  margin-top: 2rem
+}
+
+.addContact button{
+  background: none;
+  color: #64FFDA;
+  border: none;
+  font-size: 2rem;
+  font-family: 'Major Mono Display', monospace;
+}
+
+#contacts{
+}
+
+.contact{
+  border: 0.5px solid #64FFDA;
+  padding: 0.5rem;
+  position: relative
+}
+
+#delete{
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+}
+
+.contact + div{
+  margin-top: 1rem
+}
+
+.contact input{
+  background: none;
+  border: none;
+  width: 100%;
+  font-family: 'Major Mono Display', monospace;
+  color: #CCD6F6
+}
+
+.contact input::placeholder{
+  color: #CCD6F6
+}
+
+.contact input:nth-child(2){
+  font-size: 1.5rem;
+  color: #64FFDA;
+}
+.contact input:nth-child(2)::placeholder{
+  color: #64ffdb;
+}
+

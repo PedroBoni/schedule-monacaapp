@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+      var contactsLength;
+      if(!localStorage.getItem("contacts")){
+        const objInt = {
+          list: [] 
+        };
+        objInt = JSON.stringfy(objInt);
+        
+        localStorage.setItem("contacts", objInt);
+
+        contactsLength = document.querySelectorAll(".contact").length;
+      }else{
+        let contactsS = JSON.parse(localStorage.getItem("contacts"));
+        contactsLength = 0;
+        for(let i = 0; i < (contactsS.list).length; i++){
+          const contact = '<div class="contact" ondblclick="editable(this)" editableState="false" id='+contactsLength+'><button id="delete" onclick="remove('+contactsLength+')"><img src="img/delete.svg"></button><input type="text" id="name" name="name" maxlength="15" placeholder="name" disabled value='+contacts.list[i].name+'/><input type="tel" id="phone" name="phone" placeholder="phone" maxlength="11" disabled value='+contacts.list[i].phone+'/><input type="email" id="email" name="email" placeholder="email" maxlength="30" disabled value='+contacts.list[i].email+'/></div>';
+            
+          document.querySelector("#contacts").insertAdjacentHTML("afterbegin", contact);
+
+          contactsLength++;
+        }
+        contactsLength = document.querySelectorAll(".contact").length;
+      }
+
+      function editable(element){
+        if(element.editableState){
+          element.editableState = false;
+          const inputs = document.querySelectorAll(".contact input");
+          inputs.forEach(input => input.disabled = element.editableState);
+
+          inputs = element.childNodes;
+
+          name = inputs[1];
+          phone = inputs[2];
+          email = inputs[3];
+
+          let contactsStorage = JSON.parse(localStorage.getItem("contacts"));
+          contactsStorage.list[element.id] = {
+            name,
+            phone,
+            email
+          };
+          contactsStorage = JSON.stringfy(contactsStorage);
+          localStorage.setItem("contacts", contactsStorage);
+        }else{
+          element.editableState = false;
+          const inputs = document.querySelectorAll(".contact input");
+          inputs.forEach(input => input.disabled = element.editableState)
+        }
+      }
+
+      function remove(indexRemove){
+        let contacts = document.querySelectorAll(".contact")      
+        let arr = new Array(contacts.length);
+
+        for(let i = 0; i < arr.length; i++)
+          arr[i] = i;
+
+        arr = arr.reverse();
+
+        contacts[arr[indexRemove]].remove();
+
+        let contactsStorage = JSON.parse(localStorage.getItem("contacts"));
+        (contactsStorage.list).splice(arr[indexRemove], 1);
+        contactsStorage = JSON.stringfy(contactsStorage);
+        localStorage.setItem("contacts", contactsStorage);
+
+        contactsLength = contacts.length;      
+      }
+      function addContactF(){
+        const contact = '<div class="contact" ondblclick="editable(this)" editableState="false" id='+contactsLength+'><button id="delete" onclick="remove('+contactsLength+')"><img src="img/delete.svg"></button><input type="text" id="name" name="name" maxlength="15" placeholder="name" disabled/><input type="tel" id="phone" name="phone" placeholder="phone" maxlength="11" disabled/><input type="email" id="email" name="email" placeholder="email" maxlength="30" disabled/>  </div>';
+
+        contactsLength = document.querySelectorAll(".contact").length;;
+        document.querySelector("#contacts").insertAdjacentHTML("afterbegin", contact);
+        
+        let contactsStorage = JSON.parse(localStorage.getItem("contacts"));
+        
+        (contactsStorage.list).push({
+          name: "",
+          phone: "",
+          email: ""
+         });
+        contactsStorage = JSON.stringfy(contactsStorage);
+        localStorage.setItem("contacts", contactsStorage);
+      }
+      
+    </script>
+</head>
+<body>
+	<h1>Your contacts</h1>
+    <div class="row addContact">
+      <button id="addContact" onclick="addContactF()">+</button>
+    </div>
+  <div id="contacts">
+   
+  </div>
+</body>
+</html>
